@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Stepan Poletaev](https://up.htmlacademy.ru/javascript/27/user/1890943).
-* Наставник: `Неизвестно`.
+* Наставник: [Павел Позняк](https://htmlacademy.ru/profile/id907403).
 
 ---
 
