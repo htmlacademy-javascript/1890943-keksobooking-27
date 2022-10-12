@@ -3,8 +3,8 @@ function getRandomInt (min, max) {
 }
 
 function getRandomDecimal (min, max, decimalPlaces) {
-  return !(min < 0 || max < 0 || min > max) ? ((Math.random() * (max - min + 1)) + min).toFixed(decimalPlaces) : NaN;
+  return !(min < 0 || max < 0 || min > max) ? ((Math.random() * (max - min)) + min).toFixed(decimalPlaces) : NaN;
 }
 
-console.log(getRandomInt(2,100));
-console.log(getRandomDecimal(100,1000, 4));
+console.log(getRandomInt(99,100));
+console.log(getRandomDecimal(999.999,1000, 4));
