@@ -1,10 +1,20 @@
-function getRandomInt (min, max) {
-  return !(min < 0 || max < 0 || min > max) ? Math.floor(Math.random() * (max - min + 1)) + min : NaN;
+const getRandom = (min, max, decimalPlaces) => {
+  if (min < 0 || max < 0 || min === max)
+  {
+    return NaN;
+  }
+
+  if (min>max)
+  {
+    [max, min] = [min,max];
+  }
+
+  if (decimalPlaces){
+    return +(Math.random() * (max - min) + min).toFixed(decimalPlaces);
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomDecimal (min, max, decimalPlaces) {
-  return !(min < 0 || max < 0 || min > max) ? ((Math.random() * (max - min)) + min).toFixed(decimalPlaces) : NaN;
-}
-
-console.log(getRandomInt(99,100));
-console.log(getRandomDecimal(999.999,1000, 4));
+getRandom(99,100);
+getRandom(999.999,1000, 4);
