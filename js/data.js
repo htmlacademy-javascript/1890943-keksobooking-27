@@ -18,7 +18,9 @@ const OFFER_COUNT = 10;
 const PRICE_MIN = 0;
 const PRICE_MAX = 10000;
 const GUESTS_MAX = 10;
+const GUESTS_MIN = 0;
 const ROOMS_MAX = 10;
+const ROOMS_MIN = 0;
 const DESCRIPTION =
   'Сдаём нашу любимую квартиру в связи с необходимостью расширения. Удобная кухня - гостиная 14,5 м² остаётся новым хозяевам со всей мебелью и техникой. Также оставим мебель в коридоре и спальне, а также технику в ванной. Квартира удачно расположена на втором этаже , на первом прямо под квартирой колясочная зона.';
 
@@ -32,6 +34,8 @@ export {
   PRICE_MAX,
   PRICE_MIN,
   GUESTS_MAX,
+  GUESTS_MIN,
   ROOMS_MAX,
+  ROOMS_MIN,
   DESCRIPTION,
 };
