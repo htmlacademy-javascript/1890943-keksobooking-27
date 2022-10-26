@@ -15,8 +15,8 @@ const PHOTOS = [
 ];
 const TITLE = 'Трешка в центре';
 const OFFER_COUNT = 10;
-const PRICE_MIN = 100;
-const PRICE_MAX = 100;
+const PRICE_MIN = 0;
+const PRICE_MAX = 10000;
 const GUESTS_MAX = 10;
 const ROOMS_MAX = 10;
 const DESCRIPTION =
