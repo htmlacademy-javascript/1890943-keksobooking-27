@@ -1,99 +1,105 @@
-const offersList = document.querySelector(".map__canvas");
-const offerTemplate = document.querySelector("#card").content;
-const offersFragment = document.createDocumentFragment();
+const mapCanvas = document.querySelector('.map__canvas');
+const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const createOffersList = (offers) => {
-  const offersArray = offers;
-  offersArray.forEach(({ offer, author }) => {
-    var element = createOfferView(offer, author);
-    offersFragment.appendChild(element);
+const TypeToName = {
+  bungalow: 'Бунгало',
+  flat: 'Квартира',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
+
+const renderTextBlock = (parent, cssClass, data, additionalText = '') => {
+  const element = parent.querySelector(cssClass);
+  if (!data) {
+    element.remove();
+    return;
+  }
+  element.textContent = `${data}${additionalText}`;
+};
+
+const renderAvatarBlock = (parent, cssClass, data) => {
+  const element = parent.querySelector(cssClass);
+  if (!data) {
+    element.remove();
+    return;
+  }
+  element.src = data;
+};
+
+const createTimeText = (offer) => {
+  if (offer.checkin && offer.checkout) {
+    return `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  }
+  if (offer.checkin && !offer.checkout) {
+    return `Заезд после ${offer.checkin}`;
+  }
+  if (!offer.checkin && offer.checkout) {
+    return `Выезд до ${offer.checkout}`;
+  }
+  return false;
+};
+
+const createCapacityText = (offer) => {
+  if (offer.rooms && offer.guests) {
+    return `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  }
+  if (offer.rooms && !offer.guests) {
+    return `${offer.rooms} комнаты`;
+  }
+  if (!offer.rooms && offer.guests) {
+    return `Для ${offer.guests} гостей`;
+  }
+  return false;
+};
+
+const renderPhotoBlock = (parent, cssClass, data) => {
+  const element = parent.querySelector(cssClass);
+  if (!data) {
+    element.remove();
+    return;
+  }
+  const photo = element.querySelector('img');
+  element.innerHTML = '';
+  data.forEach((item) => {
+    const cloningElement = photo.cloneNode(true);
+    cloningElement.src = item;
+    element.append(cloningElement);
   });
-  offersList.appendChild(offersFragment);
 };
 
-const createOfferView = (offer, author) => {
-  const element = offerTemplate.cloneNode(true);
-  checkNull(element.querySelector(".popup__avatar"), author.avatar).src =
-    author.avatar;
-  checkNull(element.querySelector(".popup__title"), offer.title).textContent =
-    offer.title;
-  checkNull(
-    element.querySelector(".popup__text--address"),
-    offer.address
-  ).textContent = offer.address;
-  checkNull(
-    element.querySelector(".popup__text--price"),
-    offer.price
-  ).textContent = `${offer.price} ₽/ночь`;
-  checkNull(element.querySelector(".popup__type"), offer.type).textContent =
-    getTypeHouse(offer.type);
-  checkNull(
-    element.querySelector(".popup__text--capacity"),
-    offer.rooms,
-    offer.guests
-  ).textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  checkNull(
-    element.querySelector(".popup__text--time"),
-    offer.checkin,
-    offer.checkout
-  ).textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-
-  checkNull(element.querySelector(".popup__features"), offer.features);
-
-  const featuresContainer = element.querySelector(".popup__features");
-  const featuresList = featuresContainer.querySelectorAll(".popup__feature");
-  const modifiers = offer.features.map(
-    (feature) => "popup__feature--" + feature
-  );
-
-  featuresList.forEach((featuresListItem) => {
-    const modifier = featuresListItem.classList[1];
-
-    if (!modifiers.includes(modifier)) {
-      featuresListItem.remove();
-    }
+const renderFeaturesBlock = (parent, cssClass, data) => {
+  const element = parent.querySelector(cssClass);
+  if (!data) {
+    element.remove();
+    return;
+  }
+  const elementItem = document.createElement('li');
+  elementItem.classList.add('popup__feature');
+  element.innerHTML = '';
+  data.forEach((item) => {
+    const cloningElement = elementItem.cloneNode(true);
+    cloningElement.classList.add(`popup__feature--${item}`);
+    element.append(cloningElement);
   });
-
-  checkNull(
-    element.querySelector(".popup__description"),
-    offer.description
-  ).textContent = offer.description;
-
-  checkNull(element.querySelector(".popup__photos"), offer.photos);
-  const photoTemplate = element.querySelector(".popup__photo");
-  const photos = element.querySelector(".popup__photos");
-  photos.removeChild(photoTemplate);
-  if (offer.photos != null) {
-    offer.photos.forEach((photo) => {
-      const element = photoTemplate.cloneNode(true);
-      element.src = photo;
-      photos.appendChild(element);
-    });
-  }
-
-  return element;
 };
 
-const getTypeHouse = (input) => {
-  switch (input) {
-    case "palace":
-      return "Дворец";
-    case "flat":
-      return "Квартира ";
-    case "bungalow":
-      return "Бунгало";
-    case "house":
-      return "Дом";
-    case "hotel":
-      return "Отель";
-  }
+const createCard = (data) => {
+  const cardElement = cardTemplate.cloneNode(true);
+  renderTextBlock(cardElement, '.popup__title', data.offer.title);
+  renderTextBlock(cardElement, '.popup__text--address', data.offer.address);
+  renderTextBlock(cardElement, '.popup__text--price', data.offer.price, ' ₽/ночь');
+  renderTextBlock(cardElement, '.popup__type', TypeToName[data.offer.type]);
+  renderTextBlock(cardElement, '.popup__description', data.offer.description);
+  renderTextBlock(cardElement, '.popup__text--capacity', createCapacityText(data.offer));
+  renderTextBlock(cardElement, '.popup__text--time', createTimeText(data.offer));
+  renderAvatarBlock(cardElement, '.popup__avatar', data.author.avatar);
+  renderPhotoBlock(cardElement, '.popup__photos', data.offer.photos);
+  renderFeaturesBlock(cardElement, '.popup__features', data.offer.features);
+
+  return cardElement;
 };
 
-const checkNull = (element, input1, input2) => {
-  if (input1 === null || input2 === null) {
-    element.classList.add("visually-hidden");
-  }
-  return element;
-};
+const viewCard = (data) => mapCanvas.append(createCard(data));
 
-export { createOffersList };
+export {viewCard};

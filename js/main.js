@@ -1,6 +1,6 @@
 import { createOffers } from './data.js';
-import { createOffersList } from './view.js';
+import { viewCard } from './view.js';
 
-const offers = createOffers();
-createOffersList(offers);
+const offer = createOffers()[0];
+viewCard(offer);
 
