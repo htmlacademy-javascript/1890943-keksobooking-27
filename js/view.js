@@ -115,6 +115,4 @@ const createCard = (data) => {
   return cardElement;
 };
 
-const viewCard = (data) => mapCanvas.append(createCard(data));
-
-export { viewCard };
+export { createCard };
