@@ -1,6 +1,6 @@
-import { createOffers } from './data.js';
-import { viewCard } from './view.js';
-import { disableForms, formActivate, filterActivate } from './form.js';
+import {setInactivePageSate} from './page-state.js';
+import {initMap} from './init-map.js';
 
-const offer = createOffers()[0];
-viewCard(offer);
+setInactivePageSate();
+initMap();
+

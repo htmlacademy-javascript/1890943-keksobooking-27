@@ -1,4 +1,3 @@
-const mapCanvas = document.querySelector('.map__canvas');
 const cardTemplate = document
   .querySelector('#card')
   .content.querySelector('.popup');
@@ -115,6 +114,4 @@ const createCard = (data) => {
   return cardElement;
 };
 
-const viewCard = (data) => mapCanvas.append(createCard(data));
-
-export { viewCard };
+export { createCard };
