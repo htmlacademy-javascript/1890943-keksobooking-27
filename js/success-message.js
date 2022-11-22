@@ -1,6 +1,14 @@
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 let successClone;
 
+const onDocumentKeydown = (evt) => {
+  if (evt.key === 'Escape' && successClone) {
+    evt.preventDefault();
+    successClone.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
+};
+
 const createSuccess = () => {
   successClone = successTemplate.cloneNode(true);
   document.body.append(successClone);
@@ -9,14 +17,6 @@ const createSuccess = () => {
     successClone.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
   });
-};
-
-const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape' && successClone) {
-    evt.preventDefault();
-    successBlock.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
-  }
 };
 
 const renderSuccessMessage = () => {

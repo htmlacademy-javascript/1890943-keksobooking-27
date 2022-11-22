@@ -35,6 +35,12 @@ const setLocation = (target) => {
   )}, ${location.lng.toFixed(DECIMALS)}`;
 };
 
+const resetMap = () => {
+  interactiveMap.setView(START_LOCATION, MAP_ZOOM);
+  interactiveMap.closePopup();
+  interactiveMarker.setLatLng(START_LOCATION);
+};
+
 const addMarkerGroup = (data) => {
   markerGroup.addTo(interactiveMap);
   setDataRanking(data)
@@ -105,12 +111,6 @@ const initMap = () => {
   }).addTo(interactiveMap);
 
   interactiveMarker.on('move', onMarkerMove);
-};
-
-const resetMap = () => {
-  interactiveMap.setView(START_LOCATION, MAP_ZOOM);
-  interactiveMap.closePopup();
-  interactiveMarker.setLatLng(START_LOCATION);
 };
 
 export { markerGroup, addMarkerGroup, initMap, resetMap };

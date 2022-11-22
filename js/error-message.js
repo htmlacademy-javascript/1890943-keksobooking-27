@@ -6,6 +6,14 @@ const errorTemplate = document
   .querySelector('#error')
   .content.querySelector('.error');
 
+const onDocumentKeydown = (evt) => {
+  evt.preventDefault();
+  if (evt.key === 'Escape' && errorClone) {
+    errorClone.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
+};
+
 const createError = (text) => {
   errorClone = errorTemplate.cloneNode(true);
   errorClone.querySelector('.error__message').textContent = text;
@@ -15,14 +23,6 @@ const createError = (text) => {
     errorClone.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
   });
-};
-
-const onDocumentKeydown = (evt) => {
-  evt.preventDefault();
-  if (evt.key === 'Escape' && errorClone) {
-    errorClone.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
-  }
 };
 
 const renderGetErrorMessage = () => {

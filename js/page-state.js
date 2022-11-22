@@ -4,7 +4,9 @@ const mapFilters = document.querySelector('.map__filters');
 const mapFiltersFields = mapFilters.querySelectorAll('select, fieldset');
 
 const setStateElements = (elements, state) => {
-  elements.forEach((element) => element.disabled = state)
+  elements.forEach((element) => {
+    element.disabled = state;
+  });
 };
 
 const setInactiveAdFormState = () => {
@@ -32,5 +34,4 @@ const setActiveFilterFormState = () => {
   setStateElements(mapFiltersFields, false);
 };
 
-export {setInactivePageSate, setActiveAdFormState, setActiveFilterFormState};
-
+export { setInactivePageSate, setActiveAdFormState, setActiveFilterFormState };

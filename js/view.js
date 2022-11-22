@@ -1,4 +1,3 @@
-const mapCanvas = document.querySelector('.map__canvas');
 const cardTemplate = document
   .querySelector('#card')
   .content.querySelector('.popup');
